@@ -4,7 +4,7 @@ C++ class for calculating moon rise/set events for Unix, Linux, Arduino
 ## Overview
 Compute times of moonrise and moonset at a specified latitude and longitude.
 
-## Detailed synopsis
+## Synopsis
 Determine the nearest moon rise or set event previous, and the nearest
 moon rise or set event subsequent, to the specified time in seconds since the
 Unix epoch (January 1, 1970) and at the specified latitude and longitude in
@@ -26,8 +26,10 @@ April 1989, page 78.
 
 ## Usage
 
-*  MoonRise mr(double latitude, double longitude, time_t time);
+### Detailed synopsis
+MoonRise mr(double latitude, double longitude, time_t time);
 
+#### Arguments
 *  latitude, longitude:	The location of interest, in decimal degrees.
 			Latitude ranges from -90 (south pole) to 90 (north pole).
 			Longitude ranges from -180 (west of Greenwich) to
@@ -41,6 +43,7 @@ April 1989, page 78.
 			in which case zero, one, or two events may all be found
 			either before or after *time*.  
 
+#### Returned values
 *  bool moonVisible = mr.isVisible;	// Moon is visible or not at *time*.
 *  bool moonHasRise = mr.hasRise;	// There was a moonrise event in the search.
 					// interval (default 24 hours) before *time*.  
