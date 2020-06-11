@@ -44,15 +44,19 @@ MoonRise mr(double latitude, double longitude, time_t time);
 			either before or after *time*.  
 
 #### Returned values
-*  bool moonVisible = mr.isVisible;	// Moon is visible or not at *time*.
-*  bool moonHasRise = mr.hasRise;	// There was a moonrise event in the search.
-					// interval (default 24 hours) before *time*.  
-*  bool moonHasSet = mr.hasSet;		// There was a moonset event in the search
-					// interval after *time*.  
-*  float moonRiseAz = mr.riseAz;	// Where the moon will rise/set in degrees from
-*  float moonSetAz = mr.setAz;		// North.
+* bool mr.isVisible;	Moon is visible or not at *time*.
 
-*  time_t moonQueryTime = mr.queryTime;	// The *time* passed as the third argument.
-*  time_t moonRiseTime = mr.riseTime;	// The moon rise event, in GMT seconds from
-					// the Unix epoch.  
-*  time_t moonSetTime = mr.setTime;	// The moon set event.
+* bool mr.hasRise;	There was a moonrise event in the search.
+			interval (default 24 hours) before *time*.  
+
+* bool mr.hasSet;	There was a moonset event in the search interval after *time*.  
+
+* float mr.riseAz;	Where the moon will rise/set in degrees from north.  
+
+* float mr.setAz;
+
+* time_t mr.queryTime;  The *time* passed as the third argument.
+
+* time_t mr.riseTime;   The moon rise event, in GMT seconds from the Unix epoch.  
+
+* time_t mr.setTime;     The moon set event.
