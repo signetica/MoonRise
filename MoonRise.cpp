@@ -1,11 +1,11 @@
 // Compute times of moonrise and moonset at a specified latitude and longitude.
 //
 // This software minimizes computational work by performing the full calculation
-// of the lunar position three times, at the bigging, middle, and end of the
+// of the lunar position three times, at the beginning, middle, and end of the
 // period of interest.  Three point interpolation is used to predict the position
 // for each hour, and the arithmetic mean is used to predict the half-hour positions.
 //
-// The full computational burden is negligable on modern computers, but the
+// The full computational burden is negligible on modern computers, but the
 // algorithm is effective and still useful for small embedded systems.
 //
 // This software was originally adapted to javascript by Stephen R. Schmitt

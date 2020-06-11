@@ -21,7 +21,7 @@ main(int argc, char *argv[]) {
 
   // On the Arduino, if one uses the popular TimeLib.h library, getting the time
   // in GMT can be more complex.  MoonRise needs the GMT Unix time, and returns
-  // values in that format.  But TimeLib's now() returns someting similar to Unix
+  // values in that format.  But TimeLib's now() returns something similar to Unix
   // time, but in a different timezone.
 
   // Something like this may work:
@@ -37,7 +37,6 @@ main(int argc, char *argv[]) {
   struct tm gmt_tm = *gmtime(&t);
   gmt_tm.tm_isdst = -1;
   time_t gmtOffset = mktime(&gmt_tm) - t;
-  // End Arduino TimeLib workaround
 #else
 #define gmtOffset 0
 #endif
@@ -52,7 +51,8 @@ main(int argc, char *argv[]) {
   float moonRiseAz = mr.riseAz;	      // Where the moon will rise/set in degrees from
   float moonSetAz = mr.setAz;	      // North.
 
-  // Convert returned value from GMT to local time zone on the Arduino.
+  // Additional returned values requiring conversion from GMT to local time zone
+  // on the Arduino.
   time_t moonQueryTime = mr.queryTime - gmtOffset;
   time_t moonRiseTime = mr.riseTime - gmtOffset;
   time_t moonSetTime = mr.setTime - gmtOffset;
@@ -61,10 +61,10 @@ main(int argc, char *argv[]) {
   printf("Moon rise/set nearest %.24s for latitude %.2f longitude %.2f:\n",
 	 ctime(&mr.queryTime), latitude, longitude);
 
-  printf("Preceeding event:\n");
+  printf("Preceding event:\n");
   if ((!mr.hasRise || (mr.hasRise && mr.riseTime > mr.queryTime)) &&
       (!mr.hasSet || (mr.hasSet && mr.setTime > mr.queryTime)))
-    printf("\tNo moon rise or set during preceeding %d hours\n", MR_WINDOW/2);
+    printf("\tNo moon rise or set during preceding %d hours\n", MR_WINDOW/2);
   if (mr.hasRise && mr.riseTime < mr.queryTime)
     printf("\tMoon rise at %.24s, Azimuth %.2f\n", ctime(&mr.riseTime), mr.riseAz);
   if (mr.hasSet && mr.setTime < mr.queryTime)
