@@ -44,12 +44,12 @@ MoonRise mr(double latitude, double longitude, time_t time);
 			either before or after *time*.  
 
 #### Returned values
-* bool mr.isVisible;	Moon is visible or not at *time*.
+* bool mr.isVisible;	If moon is visible at *time*.
 
-* bool mr.hasRise;	There was a moonrise event in the search.
-			interval (default 24 hours) before *time*.  
+* bool mr.hasRise;	There was a moonrise event found in the search interval
+			(default 48 hours, 24 hours before and after *time*).
 
-* bool mr.hasSet;	There was a moonset event in the search interval after *time*.  
+* bool mr.hasSet;	There was a moonset event found in the search interval.
 
 * float mr.riseAz;	Where the moon will rise/set in degrees from north.  
 
