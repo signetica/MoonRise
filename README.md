@@ -19,6 +19,11 @@ for each hour, and the arithmetic mean is used to predict the half-hour position
 The full computational burden is negligible on modern computers, but the
 algorithm is effective and still useful for small embedded systems.
 
+While the number of calculations is manageable on small systems, it is unlikely that
+accurate results will be produced on systems with four-byte double precision floats
+(such as the older Arduinos).  Satisfactory results will be had on newer processors
+such as the ESP8266.
+
 ## Historical background
 This software was originally adapted to javascript by Stephen R. Schmitt
 from a BASIC program from the 'Astronomical Computing' column of Sky & Telescope,
