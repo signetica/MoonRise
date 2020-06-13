@@ -16,33 +16,33 @@ main(int argc, char *argv[]) {
   double longitude = -90;
 
   // In Unix/Linux, the Unix time is the seconds since the start of January 1, 1970,
-  // in GMT.
+  // in UTC.
   time_t t = time(NULL);
 
   // On the Arduino, if one uses the popular TimeLib.h library, getting the time
-  // in GMT can be more complex.  MoonRise needs the GMT Unix time, and returns
+  // in UTC can be more complex.  MoonRise needs the UTC Unix time, and returns
   // values in that format.  But TimeLib's now() returns something similar to Unix
   // time, but in a different timezone.
 
   // Something like this may work:
   //
-  // To produce the Unix time in seconds (in GMT) on the Arduino, we have to
+  // To produce the Unix time in seconds (in UTC) on the Arduino, we have to
   // figure out the difference between whatever is residing in now()
-  // and GMT, then add and subtract it to convert to and from GMT.
+  // and UTC, then add and subtract it to convert to and from UTC.
   // The value of time() seems even more inscrutable and less useful.
 
 #ifdef Arduino
   // Arduino TimeLib only!!!
   time_t t = now();
-  struct tm gmt_tm = *gmtime(&t);
-  gmt_tm.tm_isdst = -1;
-  time_t gmtOffset = mktime(&gmt_tm) - t;
+  struct tm utc_tm = *utcime(&t);
+  utc_tm.tm_isdst = -1;
+  time_t utcOffset = mktime(&utc_tm) - t;
 #else
-#define gmtOffset 0
+#define utcOffset 0
 #endif
 
-  // Find the last and next lunar set and rise.  The gmtOffset is only for Arduino.
-  MoonRise mr(latitude, longitude, t + gmtOffset);
+  // Find the last and next lunar set and rise.  The utcOffset is only for Arduino.
+  MoonRise mr(latitude, longitude, t + utcOffset);
 
   // Returned values:
   bool moonVisible = mr.isVisible;
@@ -51,13 +51,13 @@ main(int argc, char *argv[]) {
   float moonRiseAz = mr.riseAz;	      // Where the moon will rise/set in degrees from
   float moonSetAz = mr.setAz;	      // North.
 
-  // Additional returned values requiring conversion from GMT to local time zone
+  // Additional returned values requiring conversion from UTC to local time zone
   // on the Arduino.
-  time_t moonQueryTime = mr.queryTime - gmtOffset;
-  time_t moonRiseTime = mr.riseTime - gmtOffset;
-  time_t moonSetTime = mr.setTime - gmtOffset;
+  time_t moonQueryTime = mr.queryTime - utcOffset;
+  time_t moonRiseTime = mr.riseTime - utcOffset;
+  time_t moonSetTime = mr.setTime - utcOffset;
 
-  // Use the results as desired (use the gmtOffset variables on the Arduino):
+  // Use the results as desired (use the utcOffset variables on the Arduino):
   printf("Moon rise/set nearest %.24s for latitude %.2f longitude %.2f:\n",
 	 ctime(&mr.queryTime), latitude, longitude);
 

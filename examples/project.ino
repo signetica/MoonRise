@@ -19,6 +19,7 @@ setup() {
 
   // First, set the timezone (for a full list see:
   //	https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv)
+  // Do this before you set the time with setTime().
   setenv("TZ", "MST7MDT,M3.2.0,M11.1.0", 1)
 
   // To produce the Unix time in seconds (in UTC) on the Arduino, we have to

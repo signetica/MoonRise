@@ -45,7 +45,7 @@ To use the MoonRise library, include MoonRise.h
 		from -180 (west of Greenwich) to 180 (east of Greenwich).
 
 	time:  
-		The time to search for events, in GMT seconds from the Unix
+		The time to search for events, in UTC seconds from the Unix
 		epoch (January 1, 1970).  The closest moon rise/set event will
 		be found before and after this time.  In polar regions there
 		may not be an event within the configurable search window, in
@@ -61,12 +61,12 @@ To use the MoonRise library, include MoonRise.h
 
 	bool mr.hasSet;		// There was a moonset event found in the search interval.
 
-	float mr.riseAz;	// Where the moon will rise/set in degrees from north.
+	float mr.riseAz;	// Where the moon will rise in degrees from north.
 
-	float mr.setAz;
+	float mr.setAz;		// Where the moon will set in degrees from north.
 
 	time_t mr.queryTime;	// The *time* passed as the third argument.
 
-	time_t mr.riseTime;	// The moon rise event, in GMT seconds from the Unix epoch.
+	time_t mr.riseTime;	// The moon rise event, in UTC seconds from the Unix epoch.
 
 	time_t mr.setTime;	// The moon set event.
