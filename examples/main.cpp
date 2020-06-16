@@ -42,7 +42,8 @@ main(int argc, char *argv[]) {
 #endif
 
   // Find the last and next lunar set and rise.  The utcOffset is only for Arduino.
-  MoonRise mr(latitude, longitude, t + utcOffset);
+  MoonRise mr;
+  mr.calculate(latitude, longitude, t + utcOffset);
 
   // Returned values:
   bool moonVisible = mr.isVisible;

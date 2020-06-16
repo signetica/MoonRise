@@ -36,7 +36,8 @@ To use the MoonRise library, include MoonRise.h
 	#include <MoonRise.h>
 
 ### Detailed synopsis
-	MoonRise mr(double latitude, double longitude, time_t time);
+	MoonRise mr;
+	mr.calculate(double latitude, double longitude, time_t time);
 
 #### Arguments
 	latitude, longitude:

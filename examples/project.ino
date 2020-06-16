@@ -33,7 +33,8 @@ setup() {
   time_t utcOffset = mktime(&utc_tm) - t;
 
   // Find the last and next lunar set and rise.
-  MoonRise mr(latitude, longitude, t + utcOffset);
+  MoonRise mr
+  mr.calculate(latitude, longitude, t + utcOffset);
 
   // Returned values:
   bool moonVisible = mr.isVisible;
@@ -64,6 +65,6 @@ loop() {
 
     // Call once per minute.
     // Set the lat, long, and time and then:
-    MoonRise mr(latitude, longitude, t);
+    mr.calculate(latitude, longitude, t);
   }  
 }

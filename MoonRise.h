@@ -12,12 +12,6 @@
 
 #define MR_WINDOW   48	    // Even integer
 
-struct skyCoordinates {
-    double RA;		    // Right ascension
-    double declination;	    // Declination
-    double distance;	    // Distance
-};
-
 class MoonRise {
   public:
     time_t queryTime = 0;
@@ -29,7 +23,7 @@ class MoonRise {
     bool hasSet = false;
     bool isVisible = false;
 
-    MoonRise(double latitude, double longitude, time_t t);
+    void calculate(double latitude, double longitude, time_t t);
 
   private:
     void testMoonRiseSet(int i, double offsetDays, double latitude, double longitude,

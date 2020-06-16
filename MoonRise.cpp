@@ -29,6 +29,12 @@
 
 #define K1 15*(M_PI/180)*1.0027379
 
+struct skyCoordinates {
+    double RA;		    // Right ascension
+    double declination;	    // Declination
+    double distance;	    // Distance
+};
+
 // Determine the nearest moon rise or set event previous, and the nearest
 // moon rise or set event subsequent, to the specified time in seconds since the
 // Unix epoch (January 1, 1970) and at the specified latitude and longitude in
@@ -36,7 +42,8 @@
 //
 // We look for events from MR_WINDOW/2 hours in the past to MR_WINDOW/2 hours
 // in the future.
-MoonRise::MoonRise(double latitude, double longitude, time_t t) {
+void
+MoonRise::calculate(double latitude, double longitude, time_t t) {
   struct skyCoordinates moonPosition[3];
   double offsetDays;
 
