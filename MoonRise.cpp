@@ -25,8 +25,9 @@
 
 #include <math.h>
 #include <time.h>
-
 #include "MoonRise.h"
+
+#define K1 15*(M_PI/180)*1.0027379
 
 // Determine the nearest moon rise or set event previous, and the nearest
 // moon rise or set event subsequent, to the specified time in seconds since the
@@ -94,7 +95,8 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   ha[0] = lSideTime - mp[0].RA + k*K1;
   ha[2] = lSideTime - mp[2].RA + k*K1 + K1;
 
-  ha[1]  = (ha[2] + ha[0])/2;                // Hour Angle and declination at half hour.
+  // Hour Angle and declination at half hour.
+  ha[1]  = (ha[2] + ha[0])/2;
   mp[1].declination = (mp[2].declination + mp[0].declination)/2;
 
   double s = sin(M_PI / 180 * latitude);
@@ -280,9 +282,7 @@ MoonRise::julianDate(time_t t) {
 
 #if __ISO_C_VISIBLE < 1999
 // Arduino compiler is missing this function as of 6/2020.
-double remainder(double x, double y) {
-    return(x - (y * rint(x / y)));
-}
+#define remainder(x, y) ((double)((double)x - (double)y * rint((double)x / (double)y)))
 #endif
 
 // Local Sidereal Time

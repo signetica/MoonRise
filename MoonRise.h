@@ -5,14 +5,12 @@
 
 // Size of event search window in hours.
 // Events further away from the search time than MR_WINDOW/2 will not be
-// found.  At higher latitudes the moonrise/set intervals become larger, so if
+// found.  At higher latitudes the moon rise/set intervals become larger, so if
 // you want to find the nearest events this will need to increase.  Larger
 // windows will increase interpolation error.  Useful values are probably from
 // 12 - 48 but will depend upon your application.
 
 #define MR_WINDOW   48	    // Even integer
-
-#define K1 15*(M_PI/180)*1.0027379
 
 struct skyCoordinates {
     double RA;		    // Right ascension
