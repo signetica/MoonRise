@@ -23,7 +23,6 @@ class MoonRise {
     bool hasSet;
     bool isVisible;
 
-    MoonRise();
     void calculate(double latitude, double longitude, time_t t);
 
   private:
@@ -33,5 +32,6 @@ class MoonRise {
     double interpolate(double f0, double f1, double f2, double p);
     double julianDate(time_t t);
     double localSiderealTime(double offsetDays, double longitude);
+    void initClass();
 };
 #endif

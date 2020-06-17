@@ -34,18 +34,6 @@ struct skyCoordinates {
   double distance;	    // Distance
 };
 
-// Initialize the class.
-MoonRise::MoonRise() {
-  queryTime = 0;
-  riseTime = 0;
-  setTime = 0;
-  riseAz = 0;
-  setAz = 0;
-  hasRise = false;
-  hasSet = false;
-  isVisible = false;
-}
-
 // Determine the nearest moon rise or set event previous, and the nearest
 // moon rise or set event subsequent, to the specified time in seconds since the
 // Unix epoch (January 1, 1970) and at the specified latitude and longitude in
@@ -58,6 +46,7 @@ MoonRise::calculate(double latitude, double longitude, time_t t) {
   struct skyCoordinates moonPosition[3];
   double offsetDays;
 
+  initClass();
   queryTime = t;
   offsetDays = julianDate(t) - 2451545L;     // Days since Jan 1, 2000, 1200UTC.
   // Begin testing (MR_WINDOW / 2) hours before requested time.
@@ -322,4 +311,17 @@ MoonRise::localSiderealTime(double offsetDays, double longitude) {
   lSideTime -= floor(lSideTime);
   lSideTime *= 360;			  // Convert to degrees.
   return(lSideTime);
+}
+
+// Class initialization.
+void
+MoonRise::initClass() {
+  queryTime = 0;
+  riseTime = 0;
+  setTime = 0;
+  riseAz = 0;
+  setAz = 0;
+  hasRise = false;
+  hasSet = false;
+  isVisible = false;
 }
