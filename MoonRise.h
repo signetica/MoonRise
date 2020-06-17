@@ -23,6 +23,7 @@ class MoonRise {
     bool hasSet;
     bool isVisible;
 
+    MoonRise();
     void calculate(double latitude, double longitude, time_t t);
 
   private:

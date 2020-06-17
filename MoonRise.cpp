@@ -29,10 +29,22 @@
 #define K1 15*(M_PI/180)*1.0027379
 
 struct skyCoordinates {
-    double RA;		    // Right ascension
-    double declination;	    // Declination
-    double distance;	    // Distance
+  double RA;		    // Right ascension
+  double declination;	    // Declination
+  double distance;	    // Distance
 };
+
+// Initialize the class.
+MoonRise::MoonRise() {
+  queryTime = 0;
+  riseTime = 0;
+  setTime = 0;
+  riseAz = 0;
+  setAz = 0;
+  hasRise = false;
+  hasSet = false;
+  isVisible = false;
+}
 
 // Determine the nearest moon rise or set event previous, and the nearest
 // moon rise or set event subsequent, to the specified time in seconds since the
