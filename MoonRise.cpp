@@ -166,11 +166,11 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   //
   if ((VHz[0] < 0) && (VHz[2] > 0)) {
     if (!hasRise ||
-	(signbit(riseTime - queryTime) == signbit(eventTime - queryTime) &&
-	 fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
-	(signbit(riseTime - queryTime) != signbit(eventTime - queryTime) &&
+	((riseTime < queryTime) == (eventTime < queryTime) &&
+	 labs((long)(riseTime - queryTime)) > labs((long)(eventTime - queryTime))) ||
+	((riseTime < queryTime) != (eventTime < queryTime) &&
 	 (hasSet && 
-	  signbit(riseTime - queryTime) == signbit(setTime - queryTime)))) {
+	  (riseTime < queryTime) == (setTime < queryTime)))) {
       riseTime = eventTime;
       riseAz = az;
       hasRise = true;
@@ -178,11 +178,11 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   }
   if ((VHz[0] > 0) && (VHz[2] < 0)) {
     if (!hasSet ||
-	(signbit(setTime - queryTime) == signbit(eventTime - queryTime) &&
-	 fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
-	(signbit(setTime - queryTime) != signbit(eventTime - queryTime) &&
+	((setTime < queryTime) == (eventTime < queryTime) &&
+	 labs((long)(setTime - queryTime)) > labs((long)(eventTime - queryTime))) ||
+	((setTime < queryTime) != (eventTime < queryTime) &&
 	 (hasRise && 
-	  signbit(setTime - queryTime) == signbit(riseTime - queryTime)))) {
+	  (setTime < queryTime) == (riseTime < queryTime)))) {
       setTime = eventTime;
       setAz = az;
       hasSet = true;
