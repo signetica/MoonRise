@@ -167,7 +167,7 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   if ((VHz[0] < 0) && (VHz[2] > 0)) {
     if (!hasRise ||
 	((riseTime < queryTime) == (eventTime < queryTime) &&
-	 labs((long)(riseTime - queryTime)) > labs((long)(eventTime - queryTime))) ||
+	 fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
 	((riseTime < queryTime) != (eventTime < queryTime) &&
 	 (hasSet && 
 	  (riseTime < queryTime) == (setTime < queryTime)))) {
@@ -179,7 +179,7 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   if ((VHz[0] > 0) && (VHz[2] < 0)) {
     if (!hasSet ||
 	((setTime < queryTime) == (eventTime < queryTime) &&
-	 labs((long)(setTime - queryTime)) > labs((long)(eventTime - queryTime))) ||
+	 fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
 	((setTime < queryTime) != (eventTime < queryTime) &&
 	 (hasRise && 
 	  (setTime < queryTime) == (riseTime < queryTime)))) {
