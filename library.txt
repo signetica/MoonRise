@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map For MoonRise
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+hasRise	KEYWORD1
+hasSet	KEYWORD1
+isVisible	KEYWORD1
+queryTime	KEYWORD1
+riseAz	KEYWORD1
+riseTime	KEYWORD1
+setAz	KEYWORD1
+setTime	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+calculate	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MoonRise	LITERAL1
+MR_WINDOW	LITERAL1
