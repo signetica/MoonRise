@@ -10,13 +10,13 @@
 //
 // This software was originally adapted to javascript by Stephen R. Schmitt
 // from a BASIC program from the 'Astronomical Computing' column of Sky & Telescope,
-// April 1989, page 78.
+// July 1989, page 78.
 //
 // Subsequently adapted from Stephen R. Schmitt's javascript to c++ for the Arduino
 // by Cyrus Rahman, this work is subject to Stephen Schmitt's copyright:
 //
 // Copyright 2007 Stephen R. Schmitt  
-// Subsequent work Copyright 2020 Cyrus Rahman
+// Subsequent work Copyright 2020-2026 Cyrus Rahman
 // You may use or modify this source code in any way you find useful, provided
 // that you agree that the author(s) have no warranty, obligations or liability.  You
 // must determine the suitability of this source code for your use.
@@ -112,6 +112,7 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
   // refraction + semidiameter at horizon + distance correction
   double z = cos(M_PI / 180 * (90.567 - 41.685 / mp[0].distance));
 
+  // Combine corrections into a vertical unit sphere length.
   VHz[0] = s * sin(mp[0].declination) + c * cos(mp[0].declination) * cos(ha[0]) - z;
   VHz[2] = s * sin(mp[2].declination) + c * cos(mp[2].declination) * cos(ha[2]) - z;
 
@@ -120,19 +121,28 @@ MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double long
     
   VHz[1] = s * sin(mp[1].declination) + c * cos(mp[1].declination) * cos(ha[1]) - z;
 
+  // Use quadratic formula to invert the quadratic interpolation.
   double a, b, d, e, time;
   a = 2 * VHz[2] - 4 * VHz[1] + 2 * VHz[0];
   b = 4 * VHz[1] - 3 * VHz[0] - VHz[2];
   d = b * b - 4 * a * VHz[0];
 
-  if (d < 0)
-    goto noevent;			    // No event this hour.
-    
-  d = sqrt(d);
-  e = (-b + d) / (2 * a);
-  if ((e < 0) || (e > 1))
-    e = (-b - d) / (2 * a);
-  time = k + e + 1 / 120;	    // Time since k=0 of event (in hours).
+  // Switch to linear interpolation if a is too small.  This unusual situation
+  // can arise if the rise/set occurs at the midpoint of the test interval (ha[1])
+  // and will lead to a division by zero.
+  // (found by Claude.ai)
+  if (fabs(a) < 1e-6) {			    // Switch to linear interpolation.
+    e = -VHz[0] / (VHz[2] - VHz[0]);
+  } else {
+    if (d < 0)				    // This probably never happens.
+      goto noevent;
+
+    d = sqrt(d);
+    e = (-b + d) / (2 * a);
+    if ((e < 0) || (e > 1))
+      e = (-b - d) / (2 * a);
+  }
+  time = k + e + 1.0 / 120;	    // Round off. Time since k=0 of event (in hours).
 
   // The time we started searching + the time from the start of the search to the
   // event is the time of the event.  Add (time since k=0) - window/2 hours.
@@ -206,6 +216,7 @@ noevent:
 
 // Moon position using fundamental arguments 
 // (Van Flandern & Pulkkinen, 1979)
+// c.f. Van Flandern & Pulkkinen, 1979, accurate within 1' in interval 1979 +/- 300 years
 struct skyCoordinates
 MoonRise::moon(double dayOffset) {
   double l = 0.606434 + 0.03660110129 * dayOffset;
